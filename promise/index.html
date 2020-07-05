@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Promise {
+      constructor(executor) {
+
+        this.status = 'pending' //初始状态
+        this.value = null // 成功态时的值
+        this.error = null // 失败态时的值
+        this.resolveQue = []; //成功回调的数组
+        this.rejectQue = []; //失败成功的回调
+        //内部定义两个回调
+        // 定义 resolve
+        let resolve = res => {
+          if (this.status === 'pending') {
+            this.value = res
+            this.status = 'fulfilled'
+            debugger
+            this.resolveQue.forEach(fn => fn())
+          }
+        }
+        // 定义 reject
+        let reject = err => {
+          if (this.status === 'pending') {
+            this.error = err
+            this.status = 'rejected'
+            this.rejectQue.forEach(fn => fn())
+          }
+        }
+        executor(resolve, reject);
+      }
+      then(onFullfilled, onRejected) {
+        if (this.status === 'fulfilled') {
+          onFullfilled(this.value)
+        }
+        if (this.status === 'rejected') {
+          onRejected(this.error)
+        }
+        if (this.status === 'pending') {
+          // 保留两个回调函数的执行
+          this.resolveQue.push(() => {
+            onFullfilled(this.value)
+          })
+          this.rejectQue.push(() => {
+            onRejected(this.error)
+          })
+        }
+      }
+    }
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('hello world')
+      }, 0);
+
+    })
+    promise.then(data => {
+      console.log('成功then: ', data)
+    }, err => {
+      console.log('失败then: ', data)
+    })
+  </script>
+</body>
+
+</html>
