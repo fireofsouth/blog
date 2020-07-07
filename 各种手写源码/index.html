@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="height:5000px" />
+    <script src='./new.js'></script>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        const person = myNew(Person, '11', 12)
+        console.log(person.name)
+
+
+        // // 测试一下
+
+        // Person.prototype.say = function () {
+        //     console.log(this.age);
+        // };
+        // let p1 = myNew(Person, "lihua", 18);
+        // console.log(p1.name);
+        // console.log(p1);
+        // p1.say();
+    </script>
+</body>
+
+</html>
