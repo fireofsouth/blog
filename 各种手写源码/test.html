@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: top;
+            /*消除3px的距离*/
+        }
+
+        .box {
+            width: 600px;
+            height: 200px;
+            margin: 100px auto;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid red;
+        }
+
+        ul {
+            width: 400%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        ul li {
+            float: left;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            function $(id) {
+                return document.getElementById(id);
+            }
+            var timer = null;
+            var num = 0;
+            timer = setInterval(autoPlay, 20);
+
+            function autoPlay() {
+                num--;
+                if (num <= -1200) {
+                    num = 0;
+                }
+                $("picBox").style.left = num + "px";
+            }
+            $("picBox").onmouseover = function () {
+                clearInterval(timer);
+            }
+            $("picBox").onmouseout = function () {
+                timer = setInterval(autoPlay, 20);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box" id="scroll">
+        <ul id="picBox">
+
+            <li>哈哈哈</li>
+            <li>哈哈哈</li>
+            <li>哈哈哈</li>
+            <li>哈哈哈</li>
+        </ul>
+    </div>
+</body>
+
+</html>

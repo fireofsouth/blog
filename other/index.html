@@ -9,26 +9,13 @@
 </head>
 
 <body>
-    <div style="height:5000px" />
-    <script src='./new.js'></script>
+    <script src="./curry.js"></script>
     <script>
-        function Person(name, age) {
-            this.name = name;
-            this.age = age;
-        }
-        const person = myNew(Person, '11', 12)
-        console.log(person.name)
-
-
-        // // 测试一下
-
-        // Person.prototype.say = function () {
-        //     console.log(this.age);
-        // };
-        // let p1 = myNew(Person, "lihua", 18);
-        // console.log(p1.name);
-        // console.log(p1);
-        // p1.say();
+        let addSum = (a, b, c) => a + b + c
+        let add = curry(addSum)
+        console.log(add(1)(2)(3))
+        console.log(add(1, 2)(3))
+        console.log(add(1, 2, 3))
     </script>
 </body>
 

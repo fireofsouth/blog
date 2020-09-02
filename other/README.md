@@ -1,16 +1,16 @@
 # 常用函数的一些手写
 
-## new操作符
+## new 操作符
 
-1. new是从构造函数创造一个实例对象，然后构造函数的this指向刚创造的实例函数，并且能够使用到构造函数原型和方法
+1. new 是从构造函数创造一个实例对象，然后构造函数的 this 指向刚创造的实例函数，并且能够使用到构造函数原型和方法
 
-2. 通过apply或者call去改变this的指向
+2. 通过 apply 或者 call 去改变 this 的指向
 
 3. 继承构造函数的原型属性和方法
 
 具体代码如下：
 
-``` 
+```
  const myNew = (fn, ...args) => {
     let obj = {};
     obj.__proto__ = fn.prototype;
@@ -29,9 +29,9 @@
 
 ### call、apply、bind
 
-1.   call
+1.  call
 
-``` 
+```
 
 Function.prototype.newCall = (context, ...arg) => {
     if (!context) {
@@ -46,9 +46,9 @@ Function.prototype.newCall = (context, ...arg) => {
 
 ```
 
-2. apply 
+2. apply
 
-``` 
+```
 Function.prototype.myApply = (context, arg) => {
     if (!context) {
         // 没有上下文将window复制给context
@@ -62,9 +62,9 @@ Function.prototype.myApply = (context, arg) => {
 
 ```
 
-3. bind 
+3. bind
 
-``` 
+```
 Function.prototype.myBind = function (context, ...args) {
   if (!context || context === null) {
     context = window;
@@ -101,13 +101,13 @@ Function.prototype.myBind = function (context, ...args) {
 
 > 防抖和节流的区别
 
-  防抖是N秒内函数只会被执行一次，如果N秒内再次被触发，则重新计算延迟时间。
-  节流是规定一个单位时间，在这个单位时间内最多只能触发一次函数执行
+防抖是 N 秒内函数只会被执行一次，如果 N 秒内再次被触发，则重新计算延迟时间。
+节流是规定一个单位时间，在这个单位时间内最多只能触发一次函数执行
 
-1. 防抖通过setTimeout保证
-2. 节流通过flag保证
+1. 防抖通过 setTimeout 保证
+2. 节流通过 flag 保证
 
-``` 
+```
 const debounce = (fn, delay = 300) => {
   let timer = null;
   return function () {
@@ -123,7 +123,7 @@ const debounce = (fn, delay = 300) => {
 
 ```
 
-``` 
+```
 
 const throttle = () => {
     let timer = null;
@@ -143,9 +143,9 @@ const throttle = () => {
 ### 订阅发布模式
 
 1. 发布-订阅模式:是一种对象间一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到状态改变的通知。
-2. 实现一对多肯定有一个事件调度中心用来调度事件 订阅者可以注册事件（on）到事件中心 发布者可以发布事件（emit）到调度中心 订阅者也可以取消订阅（off）或者只订阅一次（once） 
+2. 实现一对多肯定有一个事件调度中心用来调度事件 订阅者可以注册事件（on）到事件中心 发布者可以发布事件（emit）到调度中心 订阅者也可以取消订阅（off）或者只订阅一次（once）
 
-``` 
+```
 class EventEmitter {
     constructor() {
         this.events = {};
@@ -176,4 +176,31 @@ class EventEmitter {
     }
 }
 
+```
+
+### 实现柯里化函数
+
+柯里化函数就是接受多个参数的函数变成接受一个单一参数的函数，并且返回接受剩下参数返回结果。
+
+> 判断传递的参数是否达到执行函数的 fn 个数
+> 如果达到的话，就执行执行函数，反之返回新的函数，并且返回之前传入的参数。
+
+```
+let curry = (fn, ...args) =>
+    fn.length > args.length
+        ? (...args1) => curry(fn, ...args, ...args1)
+        : fn(...args);
+
+
+```
+
+测试代码
+
+```
+    let addSum = (a, b, c) => a + b + c
+        let add = curry(addSum)
+        console.log(add(1)(2)(3))
+        console.log(add(1, 2)(3))
+        console.log(add(1, 2, 3))
+> 6 6 6
 ```
