@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function Parent(sex) {
+            this.sex = sex
+        }
+
+        function Test(age) {
+            this.age = age
+        }
+        Parent.prototype.setSex = function () {}
+
+        function Son(name, age, sex) {
+            Parent.call(this, sex)
+            Test.call(this, age)
+
+            this.name = name
+
+        }
+        var s1 = new Son('DBCdouble', 25, '男')
+        console.log(s1.setSex)
+        console.log(s1)
+    </script>
+</body>
+
+</html>
