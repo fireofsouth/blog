@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-
-<body>
-  <div>dd</div>
-  <script src="./curry.js"></script>
-  <script>
-    for (var i = 0; i < 4; i++) {
-      setTimeout(function (j) {
-        return function () {
-          console.log(j)
-        }
-      }(i), 300);
-    }
-  </script>
-</body>
-
+  <body>
+    <div>dd</div>
+    <script src="./curry.js"></script>
+    <script>
+      for (var i = 0; i < 4; i++) {
+        setTimeout(
+          (function (j) {
+            return function () {
+              console.log(j);
+            };
+          })(i),
+          300
+        );
+      }
+    </script>
+  </body>
 </html>
