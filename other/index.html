@@ -2,58 +2,24 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
-    <div>dd</div>
-    <script src="./curry.js"></script>
-    <script>
-        var findAnagrams = function (s, p) {
-            if (!s.length || !p.length || s.length < p.length) return []
-            // 求解需要用到的变量
-            const map = {}
-            const result = []
-            // 定义双指针
-            let left = 0,
-                right = 0
-            // 把字符串 p 中的字符通过 hash 存储起来
-            for (let i = 0; i < p.length; i++) {
-                const char = p[i]
-                if (!(char in map)) {
-                    map[char] = 0
-                }
-                map[char] += 1
-            }
-
-            // 指针移动终止条件
-            while (right < s.length) {
-
-                const char = s[right]
-                // map 中存在字符就移动右指针
-                if (map[char] > 0) {
-                    map[char] -= 1
-                    right++
-                    // 否则判断左指针所指向的字符是否存在 map 中
-                } else if (map[s[left]] >= 0) {
-                    map[s[left]] += 1
-                    left++
-                    // 不存在的话把左右指针全部挪到下一位
-                } else {
-                    left = right += 1
-                }
-                // 存储正确解
-                if (right - left === p.length) {
-                    result.push(left)
-                }
-            }
-            return result
-        };
-        findAnagrams('cbaebabacd', 'abc')
-    </script>
+  <div>dd</div>
+  <script src="./curry.js"></script>
+  <script>
+    for (var i = 0; i < 4; i++) {
+      setTimeout(function (j) {
+        return function () {
+          console.log(j)
+        }
+      }(i), 300);
+    }
+  </script>
 </body>
 
 </html>

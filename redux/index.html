@@ -1,59 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Title</title>
-</head>
+  </head>
 
-<body>
-    <script src='./bundle.js'></script>
+  <body>
+    <script src="./bundle.js"></script>
     <script>
-        const {
-            createStore,
-            combineReducers,
-            infoReducer,
-            counterReducer
-        } = MyBundle
-        const reducer = combineReducers({
-            counter: counterReducer,
-        });
+      const {
+        createStore,
+        combineReducers,
+        infoReducer,
+        counterReducer,
+        exceptionMiddleware,
+        loggerMiddleware,
+        timeMiddleware,
+        applyMiddleware
+      } = MyBundle;
+      const reducer = combineReducers({
+        counter: counterReducer
+      });
 
-        const nextReducer = combineReducers({
-            counter: counterReducer,
-            info: infoReducer,
-        });
+      const nextReducer = combineReducers({
+        counter: counterReducer,
+        info: infoReducer
+      });
 
-        const store = createStore(reducer);
+      // middleware
+      const rewriteCreateStoreFunc = applyMiddleware(
+        exceptionMiddleware,
+        timeMiddleware,
+        loggerMiddleware
+      );
 
-        //替换reducer，动态组合reducer
-        store.replaceReducer(nextReducer)
+      const store = createStore(reducer, {}, rewriteCreateStoreFunc);
+      //替换reducer，动态组合reducer
+      store.replaceReducer(nextReducer);
 
+      //创建store
 
-        //创建store
+      //订阅，状态改变通知订阅者，把订阅者的方法存入到监听队列中
+      store.subscribe(() => {
+        const state = store.getState();
+        console.log(state.counter.count);
+      });
+      store.subscribe(() => {
+        const state = store.getState();
+        console.log(state.info.name + state.info.description);
+      });
 
-
-        //订阅，状态改变通知订阅者，把订阅者的方法存入到监听队列中
-        store.subscribe(() => {
-            const state = store.getState();
-            console.log(state.counter.count);
-        });
-        store.subscribe(() => {
-            const state = store.getState();
-            console.log(state.info.name + state.info.description);
-        });
-
-        //通过派发改变状态
-        //通过派发改变状态
-        store.dispatch({
-            type: "INCREMENT",
-        });
-        store.dispatch({
-            type: "SET_NAME",
-            name: 'jie2',
-            description: '前端爱我'
-        });
+      //通过派发改变状态
+      //通过派发改变状态
+      store.dispatch({
+        type: 'INCREMENT'
+      });
+      store.dispatch({
+        type: 'SET_NAME',
+        name: 'jie2',
+        description: '前端爱我'
+      });
     </script>
-</body>
-
+  </body>
 </html>
